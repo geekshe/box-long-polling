@@ -14,20 +14,6 @@ headers = {'Authorization': 'Bearer {}'.format(developer_token)}
 # Define helper functions ######################################################
 
 
-def get_first_position(position):
-    """ Retrieve the next stream position from the Box Events endpoint.
-
-        The first time it is called with the position 'now'. After an event is
-        triggered, it is called with the stream position for the next event.
-    """
-
-    position = 'now'
-    params = {'stream_position': position}
-
-    r = requests.get(events_url, headers=headers, params=params)
-    return r.json()['next_stream_position']
-
-
 def get_next_position(position):
     """ Retrieve the next stream position from the Box Events endpoint.
 
@@ -108,7 +94,7 @@ def start_listener():
 
         # Note: I was getting inconsistent results carrying the stream position
         # forward, so I opted to follow an event trigger with the nearest
-        # 'now' event
+        # 'now' event. This tactic is fragile and could allow events to be missed.
         poll_events(get_next_position('now'), poll_url)
 
     return None
