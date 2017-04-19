@@ -78,6 +78,7 @@ def start_listener():
     """ Retrieve first stream position and polling URL, start event lister, and
         poll until stopped by keyboard interrupt """
 
+    # TODO: Add exception handling.
     first_position = get_next_position('now')
     print first_position
     poll_url = get_poll_url()
@@ -92,7 +93,7 @@ def start_listener():
     while True:
         print '\nWaiting for an event...\n'
 
-        # Note: I was getting inconsistent results carrying the stream position
+        # TODO: I was getting inconsistent results carrying the stream position
         # forward, so I opted to follow an event trigger with the nearest
         # 'now' event. This tactic is fragile and could allow events to be missed.
         poll_events(get_next_position('now'), poll_url)
